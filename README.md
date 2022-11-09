@@ -14,4 +14,4 @@ If you won't build the program, you can download the built jar file in project a
 Note: JRE/JDK 1.8 or higher version required to run this program.
 
 ## Usage
-java -jar transformer-jar-with-dependencies.jar --image-dir <PPOCRLabel cropped image folder> --label-file <original PPOCRLabel label file>
+java -jar transformer-jar-with-dependencies.jar --image-dir &lt;PPOCRLabel cropped image folder> --label-file &lt;original PPOCRLabel label file>
