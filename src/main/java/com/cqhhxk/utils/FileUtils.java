@@ -2,6 +2,8 @@ package com.cqhhxk.utils;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.io.File;
+
 /**
  * FileUtils
  * @author george
@@ -78,5 +80,21 @@ public class FileUtils {
         int pathLength = path.length();
         boolean hasTrailingSlash = "/".equals(path.substring(pathLength - 1));
         return path + (hasTrailingSlash ? "" : "/") + filename;
+    }
+
+    /**
+     * Check if two paths are the same in fact
+     * @param src Source path
+     * @param target Target path
+     * @return True if same, false if not
+     */
+    public static boolean samePath(@NotNull String src, @NotNull String target) {
+        if (src.equals(target)) {
+            return true;
+        }
+
+        File srcFile = new File(src);
+        File targetFile = new File(target);
+        return srcFile.getAbsolutePath().equals(targetFile.getAbsolutePath());
     }
 }

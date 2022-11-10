@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.constraints.NotNull;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +25,19 @@ import java.util.stream.Collectors;
  */
 public class Transformer {
     private final TransformerArgs args;
+    /**
+     * If extending image canvas required
+     */
+    private boolean extendImageCanvasRequired;
+    /**
+     * Target folder to save transformed label file and modified images
+     */
+    private final String targetDir;
 
     public Transformer(TransformerArgs args) {
         this.args = args;
+        extendImageCanvasRequired = args.getWidth() > 0 && args.getHeight() > 0;
+        targetDir = extendImageCanvasRequired ? args.getOutputDir() : args.getCroppedImageDir();
     }
 
     /**
@@ -193,6 +204,9 @@ public class Transformer {
             image = ImageIO.read(new File(FileUtils.jointPath(args.getCroppedImageDir(), imageFile)));
             width = image.getWidth();
             height = image.getHeight();
+            if (extendImageCanvasRequired) {
+                extendImageCanvas(image, imageFile);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -211,6 +225,23 @@ public class Transformer {
     }
 
     /**
+     * Extend image canvas
+     * @param src Source image
+     * @param filename Source image's filename
+     * @throws IOException exception on writing image to disk
+     */
+    private void extendImageCanvas(BufferedImage src, String filename) throws IOException {
+        BufferedImage target = new BufferedImage(args.getWidth(), args.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics = target.createGraphics();
+        graphics.drawImage(src, 0, 0, null);
+        graphics.dispose();
+
+        String targetFile = FileUtils.jointPath(targetDir, filename);
+        String formatName = filename.substring(filename.lastIndexOf(".") + 1);
+        ImageIO.write(target, formatName, new File(targetFile));
+    }
+
+    /**
      * Get target label file path
      * @return Label file path
      */
@@ -219,7 +250,7 @@ public class Transformer {
         String prefix = FileUtils.extractFilename(targetLabelFile);
         targetLabelFile = targetLabelFile.replace(prefix, prefix + "_transformed");
 
-        return FileUtils.jointPath(args.getCroppedImageDir(), targetLabelFile);
+        return FileUtils.jointPath(targetDir, targetLabelFile);
     }
 
     /**

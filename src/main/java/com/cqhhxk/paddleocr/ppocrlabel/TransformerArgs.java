@@ -16,4 +16,16 @@ public class TransformerArgs {
      * The label file saved by PPOCRLabel
      */
     private String labelFile;
+    /**
+     * The new width of canvas (px)
+     */
+    private int width;
+    /**
+     * The new height of canvas (px)
+     */
+    private int height;
+    /**
+     * The folder to save modified images
+     */
+    private String outputDir;
 }
