@@ -41,7 +41,7 @@ public class Transformer {
                 String originalImageFilename = FileUtils.extractFilename(srcLabel.getImageFile());
                 List<String> interImageFiles =
                         imageFiles.stream()
-                                .filter(s -> s.startsWith(originalImageFilename))
+                                .filter(s -> s.startsWith(originalImageFilename + "_crop_"))
                                 .sorted((a, b) -> {
                                     int indexA = getCroppedImageIndex(a);
                                     int indexB = getCroppedImageIndex(b);
