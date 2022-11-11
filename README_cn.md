@@ -10,7 +10,7 @@
 
 ### V1.1
 
-增加支持在转换标注文件时扩展切图画布。
+增加支持在转换标注文件时扩展切图画布（可选）。
 
 ## 构建
 
@@ -27,13 +27,14 @@
 
 
 ## 用法
-java -jar transformer-jar-with-dependencies.jar &lt;options><br>
-<br>
-Options:<br>
-&nbsp;&nbsp;--image-dir   (Required) PPOCRLabel保存切图的目录<br>
-&nbsp;&nbsp;--label-file  (Required) PPOCRLabel生成的标注文件<br>
-&nbsp;&nbsp;--width       (Optional) 扩展画布到指定宽度（像素）<br>
-&nbsp;&nbsp;--height      (Optional) 扩展画布到指定高度（像素）<br>
-&nbsp;&nbsp;--output-dir  (Optional) 保存修改后的切图的目录<br>
-<br>
-&nbsp;&nbsp;注: 如果打算在转换标注文件时扩展切图的画布, --width、--height和--output-dir都必须指定。
+<pre>
+java -jar transformer-jar-with-dependencies.jar &lt;options>
+
+Options:
+    --image-dir   (必需) PPOCRLabel保存切图的目录
+    --label-file  (必需) PPOCRLabel生成的标注文件
+    --width       (可选) 扩展画布到指定宽度（像素）
+    --height      (可选) 扩展画布到指定高度（像素）
+    --output-dir  (可选) 保存修改后的切图的目录
+</pre>
+注: 如果打算在转换标注文件时扩展切图的画布, --width、--height和--output-dir选项都必须指定。
