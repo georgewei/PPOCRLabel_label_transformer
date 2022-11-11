@@ -230,8 +230,10 @@ public class Transformer {
      * @param filename Source image's filename
      * @throws IOException exception on writing image to disk
      */
-    private void extendImageCanvas(BufferedImage src, String filename) throws IOException {
-        BufferedImage target = new BufferedImage(args.getWidth(), args.getHeight(), BufferedImage.TYPE_INT_RGB);
+    private void extendImageCanvas(@NotNull BufferedImage src, @NotNull String filename) throws IOException {
+        int width = Math.max(src.getWidth(), args.getWidth());
+        int height = Math.max(src.getHeight(), args.getHeight());
+        BufferedImage target = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = target.createGraphics();
         graphics.drawImage(src, 0, 0, null);
         graphics.dispose();
